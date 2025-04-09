@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>推荐系统学习（CTR预估） | YangLingSanShan</title><meta name="author" content="舲."><meta name="copyright" content="舲."><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] 召回： 传统召回算法：主要思想：协同过滤（collaborative filtering）是一种在推荐系统中广泛使用的技术，该技术通过分析用户或者事物之间的相似性（“协同”），来预测用户可能感兴趣的内容并将此内容推荐给用户。 ItemCFUserCFCTR预估FM 因子分解机 论文链接：Factorization Machines  介绍：作为逻辑回归模型LR的改进版，拟解决在稀疏数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="推荐系统学习（CTR预估）">
+<meta property="og:url" content="https://yanglingsanshan.github.io/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/index.html">
+<meta property="og:site_name" content="YangLingSanShan">
+<meta property="og:description" content="[TOC] 召回： 传统召回算法：主要思想：协同过滤（collaborative filtering）是一种在推荐系统中广泛使用的技术，该技术通过分析用户或者事物之间的相似性（“协同”），来预测用户可能感兴趣的内容并将此内容推荐给用户。 ItemCFUserCFCTR预估FM 因子分解机 论文链接：Factorization Machines  介绍：作为逻辑回归模型LR的改进版，拟解决在稀疏数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yanglingsanshan.github.io/img/avatar.png">
+<meta property="article:published_time" content="2025-04-09T06:46:44.000Z">
+<meta property="article:modified_time" content="2025-04-09T06:51:17.931Z">
+<meta property="article:author" content="舲.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yanglingsanshan.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "推荐系统学习（CTR预估）",
+  "url": "https://yanglingsanshan.github.io/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/",
+  "image": "https://yanglingsanshan.github.io/img/avatar.png",
+  "datePublished": "2025-04-09T06:46:44.000Z",
+  "dateModified": "2025-04-09T06:51:17.931Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "舲.",
+      "url": "https://yanglingsanshan.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yanglingsanshan.github.io/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '推荐系统学习（CTR预估）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/luoxiaohan_6.jpg);"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YangLingSanShan</span></a><a class="nav-page-title" href="/"><span class="site-name">推荐系统学习（CTR预估）</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">推荐系统学习（CTR预估）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-09T06:46:44.000Z" title="发表于 2025-04-09 14:46:44">2025-04-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-09T06:51:17.931Z" title="更新于 2025-04-09 14:51:17">2025-04-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>[TOC]</p>
+<h1 id="召回："><a href="#召回：" class="headerlink" title="召回："></a>召回：</h1><p><img src="https://picx.zhimg.com/v2-7ee3cbb82929d34022a633019713fc0b_1440w.jpg" alt="img"></p>
+<h2 id="传统召回算法："><a href="#传统召回算法：" class="headerlink" title="传统召回算法："></a>传统召回算法：</h2><p>主要思想：<strong>协同过滤</strong>（collaborative filtering）是一种在推荐系统中广泛使用的技术，该技术通过分析用户或者事物之间的相似性（“协同”），来预测用户可能感兴趣的内容并将此内容推荐给用户。</p>
+<h3 id="ItemCF"><a href="#ItemCF" class="headerlink" title="ItemCF"></a>ItemCF</h3><h3 id="UserCF"><a href="#UserCF" class="headerlink" title="UserCF"></a>UserCF</h3><h1 id="CTR预估"><a href="#CTR预估" class="headerlink" title="CTR预估"></a>CTR预估</h1><h2 id="FM-因子分解机"><a href="#FM-因子分解机" class="headerlink" title="FM 因子分解机"></a>FM 因子分解机</h2><blockquote>
+<p>论文链接：<a target="_blank" rel="noopener" href="https://www.ismll.uni-hildesheim.de/pub/pdfs/Rendle_et_al2011-Context_Aware.pdf">Factorization Machines</a></p>
+</blockquote>
+<h3 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h3><p>作为逻辑回归模型<strong>LR的改进版</strong>，拟解决<strong>在稀疏数据的场景下模型参数难以训练的问题</strong>。并且考虑了<strong>特征的二阶交叉</strong>，弥补了逻辑回归表达能力差的缺陷。</p>
+<h3 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h3><p>$$<br>y&#x3D;\omega_{0}+\sum_{i&#x3D;1}^{n} \omega_{i} x_{i}+\sum_{i&#x3D;1}^{n-1} \sum_{j&#x3D;i+1}^{n} \omega_{i j} x_{i} x_{j}<br>$$</p>
+<p>在线性模型的基础上添加了一个多项式(最后一项)，用于描述特征之间的二阶交叉。但是参数学习困难，因为对 $w_{ij}$ 进行更新时，求得的梯度对应为$x_i$、 $x_j$，当且仅当二者都非 0 时参数才会得到更新。因此引入辅助向量，使用内积：<br>$$<br>\hat{y}(\mathbf{x}):&#x3D;w_{0}+\sum_{i&#x3D;1}^{n} w_{i} x_{i}+\sum_{i&#x3D;1}^{n} \sum_{j&#x3D;i+1}^{n}\left\langle\mathbf{v}<em>{i}, \mathbf{v}</em>{j}\right\rangle x_{i} x_{j}<br>$$<br>引入辅助向量削弱了参数间的独立性，只要$x_i$不是0，参数就可以得到更新。解决了数据稀疏带来的难以训练问题。</p>
+<p>在时间复杂度上，可以从$O(n^2k)$优化到$O(nk)$，更利于上线使用<br>$$<br>\begin{aligned}\sum_{i&#x3D;1}^{n-1} \sum_{j&#x3D;i+1}^{n}&lt;v_{i}, v_{j}&gt;x_{i} x_{j} &amp; &#x3D;\frac{1}{2} \sum_{i&#x3D;1}^{n} \sum_{j&#x3D;1}^{n}&lt;v_{i}, v_{j}&gt;x_{i} x_{j}-\frac{1}{2} \sum_{i&#x3D;1}^{n}&lt;v_{i}, v_{i}&gt;x_{i} x_{i} \&amp; &#x3D;\frac{1}{2}\left(\sum_{i&#x3D;1}^{n} \sum_{j&#x3D;1}^{n} \sum_{f&#x3D;1}^{k} v_{i, f} v_{j, f} x_{i} x_{j}-\sum_{i&#x3D;1}^{n} \sum_{f&#x3D;1}^{k} v_{i, f} v_{i, f} x_{i} x_{i}\right) \&amp; &#x3D;\frac{1}{2} \sum_{f&#x3D;1}^{k}\left[\left(\sum_{i&#x3D;1}^{n} v_{i, f} x_{i}\right) \cdot\left(\sum_{j&#x3D;1}^{n} v_{j, f} x_{j}\right)-\sum_{i&#x3D;1}^{n} v_{i, f}^{2} x_{i}^{2}\right] \&amp; &#x3D;\frac{1}{2} \sum_{f&#x3D;1}^{k}\left[\left(\sum_{i&#x3D;1}^{n} v_{i, f} x_{i}\right)^{2}-\sum_{i&#x3D;1}^{n} v_{i, f}^{2} x_{1}^{2}\right]\end{aligned}<br>$$<br>同时，也可以拓展到多维空间:<br>$$<br>\begin{array}{l}\hat{y}(x):&#x3D;w_{0}+\sum_{i&#x3D;1}^{n} w_{i} x_{i} \+\sum_{l&#x3D;2}^{d} \sum_{i i&#x3D;1}^{n} \ldots \sum_{i&#x3D;1}^{n}\left(\prod_{j&#x3D;1}^{l} x_{i_{j}}\right)\left(\sum_{f&#x3D;1]}^{k_{l}} \prod_{i&#x3D;1}^{l} v_{i j, f}^{(l)}\right)\end{array}<br>$$<br>跟二阶交叉项相同，多阶交叉项也可从 $O(n^lk)$ 复杂度降到线性的 $O(nk)$，具有非常好的性质。</p>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a><strong>优点：</strong></h3><ol>
+<li>将<strong>二阶交叉特征</strong>考虑进来，提高模型的表达能力；</li>
+<li><strong>引入隐向量</strong>，缓解了数据稀疏带来的参数难训练问题；</li>
+<li>模型复杂度保持为线性，并且改进为高阶特征组合时，仍为线性复杂度，有利于上线应用。</li>
+</ol>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li>虽然考虑了特征的交叉，但是<strong>表达能力仍然有限</strong>，不及深度模型；</li>
+<li>同一特征 $x_i$ 与不同特征组合使用的都是同一隐向量 $v_i$ ，<strong>违反了特征与不同特征组合可发挥不同重要性的事实</strong>。</li>
+</ol>
+<hr>
+<h2 id="FFM"><a href="#FFM" class="headerlink" title="FFM"></a>FFM</h2><blockquote>
+<p>论文链接：<a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~cjlin/papers/ffm.pdf">FFM</a></p>
+</blockquote>
+<h3 id="介绍：-1"><a href="#介绍：-1" class="headerlink" title="介绍："></a>介绍：</h3><p>一个特征在跟不同特征作交互时，会发挥不同的作用，因此应该具有不同的向量表示，解决了FM同一隐向量问题</p>
+<h3 id="原理：-1"><a href="#原理：-1" class="headerlink" title="原理："></a>原理：</h3><p>FFM 将隐向量进一步细分，每个特征具有多个隐向量 (等于 field 的数目)。公式如下：<br>$$<br>y(\mathbf{x})&#x3D;w_{0}+\sum_{i&#x3D;1}^{n} w_{i} x_{i}+\sum_{i&#x3D;1}^{n} \sum_{j&#x3D;i+1}^{n}\left\langle\mathbf{v}<em>{i, f</em>{j}}, \mathbf{v}<em>{j, f</em>{i}}\right\rangle x_{i} x_{j}<br>$$<br>$V_{i,f_j}$表示特征 $i$ 与 特征$ j$ 交互时的隐向量表示，其中 $f_j$ 表示第 $j$ 个特征所属的 field。</p>
+<p>模型参数量为 $1+n+n(F−1)k$ ， $F$ 为 field 数。公式不可化简，复杂度为 $O(n^2k)$。</p>
+<h3 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a><strong>优点：</strong></h3><ol>
+<li>引入 field 域的概念，让某一特征与不同特征做交互时，可发挥不同的重要性，提升模型表达能力；</li>
+<li>可解释性强，可提供某些特征组合的重要性。</li>
+</ol>
+<h3 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li>复杂度高，不适用于特征数较多的场景。</li>
+</ol>
+<hr>
+<h2 id="Wide-Deep"><a href="#Wide-Deep" class="headerlink" title="Wide &amp; Deep"></a>Wide &amp; Deep</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1606.07792">Wide&amp;Deep</a></p>
+</blockquote>
+<h3 id="介绍：-2"><a href="#介绍：-2" class="headerlink" title="介绍："></a>介绍：</h3><p>在此之前，CTR任务中主要以<strong>线性模型+人工特征</strong>为主流方法，此类方法缺陷比较明显：线性模型表达能力有限，需要大量人工特征来提升模型效果。随着深度学习的不断火热，深度模型展现了强大的表达能力，并且能自适应的学习特征之间的高阶交互。</p>
+<p>因此 Google 取彼之长补己之短，将线性模型与深度模型以并行结构的方式进行融合，线性部分拟提取低阶交互信息，深度部分提取高阶交互信息，提出了 Wide&amp;Deep模型，并在Google Play store中成功落地，收益明显。</p>
+<h3 id="原理：-2"><a href="#原理：-2" class="headerlink" title="原理："></a>原理：</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409102622371.png" alt="image-20250409102622371"><br>$$<br>P(Y&#x3D;1 \mid \mathbf{x})&#x3D;\sigma\left(\mathbf{w}<em>{\text {wide }}^{T}[\mathbf{x}, \phi(\mathbf{x})]+\mathbf{w}</em>{\text {deep }}^{T} a^{\left(l_{f}\right)}+b\right)<br>$$<br>括号内第一项为线性模型的输出，第二项为深度模型的输出，将两部分输出相加，再加上一个偏置$ b $之后输入 sigmoid 进行激活得到预测的概率值。</p>
+<h4 id="Wide部分"><a href="#Wide部分" class="headerlink" title="Wide部分"></a>Wide部分</h4><p>线性部分等同于一个 LR，唯一不同的是在输入上多了 $ϕ(X)$，该项表示的是在原始输入 $X$ 上构造出的人工特征，一般为特征之间的二阶交互，也可根据业务场景设计一些复杂的强特征，以提升模型表达能力。<br>$$<br>y&#x3D;W^{T}[X, \phi(X)]+b<br>$$<br>线性部分的输出是对输入 $[X,ϕ(X)]$ 的线性映射，无需激活。</p>
+<h4 id="Deep部分"><a href="#Deep部分" class="headerlink" title="Deep部分"></a>Deep部分</h4><p>该部分为一个多层的全连接网络，第 $l$ 层的输出为 $a(l)$ ， $y$ 为全连接最后一层未进行 sigmoid 激活的输出，与线性部分未激活的输出相累加再进行激活即为模型最终输出。<br>$$<br>\begin{array}{c}y&#x3D;\mathbf{w}<em>{\text {deep }}^{T} a^{\left(l</em>{f}\right)} \a^{(l+1)}&#x3D;\sigma\left(W^{(l)} a^{(l)}+b^{(l)}\right)\end{array}<br>$$<br><strong>需要注意的是，两部分的输入不同：</strong></p>
+<p>Wide 部分：Dense Features + Sparse Features（onehot 处理）+ 特征组合</p>
+<p>Deep 部分：Dense Embeddings (Sparse Features 进行 onehot + embedding 处理)</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点:"></a><strong>优点:</strong></h3><ol>
+<li><p><strong>结构简单，复杂度低</strong>，目前在工业界仍有广泛应用；</p>
+</li>
+<li><p>线性模型与深度模型优势互补，分别提取低阶与高阶特征交互信息，<strong>兼顾记忆能力与泛化能力</strong>；</p>
+</li>
+<li><p>线性部分为广义线性模型，可灵活替换为其他算法，比如 FM，提升 wide 部分提取信息的能力。</p>
+</li>
+</ol>
+<h3 id="缺点：-2"><a href="#缺点：-2" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li><p>深度模型可自适应的进行高阶特征交互，但这是隐式的构造特征组合，<strong>可解释性差</strong>；</p>
+</li>
+<li><p>深度模型<strong>仍需要人工特征</strong>来提升模型效果，只是<strong>需求量没有线性模型大</strong>。</p>
+</li>
+</ol>
+<hr>
+<h2 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.ijcai.org/proceedings/2017/0239.pdf">DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</a></p>
+</blockquote>
+<h3 id="介绍：-3"><a href="#介绍：-3" class="headerlink" title="介绍："></a>介绍：</h3><p>DeepFM 是 Deep 与 FM 结合的产物，也是 Wide&amp;Deep 的改进版，只是将其中的 LR 替换成了 FM，提升了模型 wide 侧提取信息的能力。</p>
+<h3 id="原理：-3"><a href="#原理：-3" class="headerlink" title="原理："></a>原理：</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409102600150.png" alt="image-20250409102600150"></p>
+<h4 id="Sparse-Features"><a href="#Sparse-Features" class="headerlink" title="Sparse Features"></a><strong>Sparse Features</strong></h4><p>一般类别特征无法直接输入模型，所以需要先 onehot 处理得到的其稀疏01向量表示。该层即表示经过 <a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=168451893&content_type=Article&match_order=1&q=onehot+%E7%BC%96%E7%A0%81&zhida_source=entity">onehot 编码</a>的类别特征与数值特征的拼接。</p>
+<h4 id="Dense-Embeddings"><a href="#Dense-Embeddings" class="headerlink" title="Dense Embeddings"></a>Dense Embeddings</h4><p>该层为嵌入层，用于对高维稀疏的 01 向量做嵌入，得到低维稠密的向量 e (每个01向量对应自己的嵌入层，不同向量的嵌入过程相互独立，如上图所示）。然后将每个稠密向量横向拼接，在拼接上原始的数值特征，然后作为 Deep 与 FM 的输入</p>
+<h4 id="FM-Layer"><a href="#FM-Layer" class="headerlink" title="FM Layer"></a><strong>FM Layer</strong></h4><p>FM 有两部分，<strong>线性部分</strong>和<strong>交叉部分</strong>。线性部分 (黑色线段) 是给与每个特征一个权重，然后进行加权和；交叉部分 (红色线段) 是对特征进行两两相乘，然后赋予权重加权求和。然后将两部分结果累加在一起即为 FM Layer 的输出。<br>$$<br>y_{F M}&#x3D;\langle w, x\rangle+\sum_{i&#x3D;1}^{d} \sum_{j&#x3D;i+1}^{d}\left\langle V_{i}, V_{j}\right\rangle x_{i} \cdot x_{j}<br>$$</p>
+<h4 id="Hidden-Layer"><a href="#Hidden-Layer" class="headerlink" title="Hidden Layer"></a>Hidden Layer</h4><p>$$<br>\begin{array}{l}a^{(0)}&#x3D;\left[e_{1}, e_{2}, \ldots, e_{m}\right]\a^{(l+1)}&#x3D;\sigma\left(W^{(l)} a^{(l)}+b^{(l)}\right)\end{array}<br>$$</p>
+<p>Deep 部分的输入 $a^{(0)}$ 为所有稠密向量的横向拼接，然后经过多层<strong>线性映射+非线性转换</strong>得到 Hidden Layer 的输出，一般会映射到1维，因为需要与 FM 的结果进行累加。</p>
+<h4 id="Output-Units"><a href="#Output-Units" class="headerlink" title="Output Units"></a><strong>Output Units</strong></h4><p>$$<br>\hat{y}&#x3D;\operatorname{sigmoid}\left(y_{F M}+y_{D N N}\right)<br>$$</p>
+<p>输出层为 FM Layer 的结果与 Hidden Layer 结果的累加，低阶与高阶特征交互的融合，然后经过 Sigmoid 非线性转换，得到预测的概率输出。</p>
+<h3 id="优点：-2"><a href="#优点：-2" class="headerlink" title="优点："></a>优点：</h3><ol>
+<li><p>两部分联合训练，<strong>无需加入人工特征</strong>，更易部署；</p>
+</li>
+<li><p>结构简单，复杂度低，两部分共享输入，共享信息，可更精确的训练学习。</p>
+</li>
+</ol>
+<h3 id="缺点：-3"><a href="#缺点：-3" class="headerlink" title="缺点："></a>缺点：</h3><ol>
+<li>将类别特征对应的稠密向量拼接作为输入，然后对元素进行两两交叉。这样导致模型无法意识到域的概念，FM 与 Deep 两部分都不会考虑到域，属于同一个域的元素应该对应同样的计算。</li>
+</ol>
+<hr>
+<h2 id="Deep-Cross（DCN）"><a href="#Deep-Cross（DCN）" class="headerlink" title="Deep&amp;Cross（DCN）"></a>Deep&amp;Cross（DCN）</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1708.05123">Deep &amp; Cross Network for Ad Click Predictions</a></p>
+</blockquote>
+<h3 id="介绍：-4"><a href="#介绍：-4" class="headerlink" title="介绍："></a>介绍：</h3><p>把 wide 侧的 LR 换成了 cross layer，可显式的构造有限阶特征组合，并且具有较低的复杂度。</p>
+<h3 id="原理：-4"><a href="#原理：-4" class="headerlink" title="原理："></a>原理：</h3><p>通过显式交叉⽹络（Cross Layer）⽣成⾼阶特征，替代Wide部分的交叉特征⼯程。 </p>
+<img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409102724259.png" alt="image-20250409102724259" style="zoom:67%;" />
+
+<h3 id="优点：-3"><a href="#优点：-3" class="headerlink" title="优点："></a>优点：</h3><ol>
+<li>引入 cross layer 显示的构造有限阶特征组合，无需特征工程，可端到端训练；</li>
+<li>cross layer 具有线性复杂度，可累加多层构造高阶特征交互，并且因为其类似残差连接的计算方式，使其累加多层也不会产生梯度消失问题；</li>
+<li>跟 deepfm 相同，两个分支共享输入，可更精确的训练学习。</li>
+</ol>
+<h3 id="缺点：-4"><a href="#缺点：-4" class="headerlink" title="缺点："></a>缺点：</h3><p>cross layer 是以 bit-wise 方式构造特征组合的，最小粒度是特征向量中的每个元素，这样导致 DCN 不会考虑域的概念，属于同一特征的各个元素应同等对待；</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>以上介绍的 DCN 也叫作 DCN-vector。</p>
+<p>改进版DCN-matrix 将 cross layer 中做线性映射的向量 $W$ 替换成了矩阵，并且为了不引入过多的参数量，作者又将 $W$ 矩阵分解成了两个高瘦矩阵的乘积，并且在第一个矩阵映射后还可以加一个激活函数进行非线性转换，以此来提高模型的表达能力，这就是 DCN-matrix 相对于 DCN-vector 的不同之处。</p>
+<p>DCN-matrix 也提出了一种串行拼接方式，就是将 cross layer 最后一层的输出作为 deep layer 的输入，串行的拼接两部分。串行与并行拼接方式在不同场景中表现不同，说不上孰好孰坏。</p>
+<hr>
+<h2 id="xDeepFM"><a href="#xDeepFM" class="headerlink" title="xDeepFM"></a>xDeepFM</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.05170">xDeepFM: Combining Explicit and Implicit Feature Interactions for Recommender Systems</a></p>
+</blockquote>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>xDeepFM 是 Wide &amp; Deep 的改进版，在此基础上添加了 CIN 层显式的构造有限阶特征组合。xDeepFM 虽然名字跟 DeepFM 类似，但是两者相关性不大。</p>
+<h3 id="原理：-5"><a href="#原理：-5" class="headerlink" title="原理："></a>原理：</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409104440046.png" alt="image-20250409104440046"></p>
+<p>有三个分支：Linear（稀疏的01向量作为输入）、DNN（经过embedding的稠密向量作为输入）、CIN。xDeepFM 如果去掉 CIN 分支，就等同于 Wide &amp; Deep</p>
+<h4 id="CIN"><a href="#CIN" class="headerlink" title="CIN"></a>CIN</h4><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409104849738.png" alt="image-20250409104849738" style="zoom:50%;" />
+
+<ol>
+<li><p>CIN 的输入是所有 field 列向量横向拼接得到的矩阵 $X_0∈Rm∗D $( m 个维度为 D 的 field 向量)。并且后续的每层特征组合都是形状都是 $(H_i,D)$ ，每层的特征个数 $H_i$不再相同，维度 D 始终保持不变；</p>
+</li>
+<li><p>每次第 i 层的特征矩阵 $(H_i,D)$ 都会与原始输入 $(m,D)$ 做交互，得到第 $i+1$ 层的特征矩阵 $(H_{i+1},D)$，<strong>具体交互方式</strong>:</p>
+<img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409105331001.png" alt="image-20250409105331001" style="zoom:67%;" />
+
+<ul>
+<li><p>矩阵$ (H_k,D)$ 与 $(m,D)$ 分别是含有 $H_k$ 和$ m $个 D 维特征的矩阵；</p>
+</li>
+<li><p>两个矩阵中的特征两两做对应元素乘积，会得到 $H_k∗m$ 个 D 维特征，这样就实现了特征交互（图中画出的框框是内积计算方式，不好理解）；</p>
+</li>
+<li><p>这些交互特征不是直接拼接成形状为 $(H_k∗m,D)$ 的特征矩阵，而是拼接成三维矩阵 $(H_k,m,D)$ ;</p>
+</li>
+<li><p><strong>得到三维矩阵后，</strong>使用一个形状为 $(H_k,m)$ 权重矩阵 $W$ ，分别与三维矩阵中 $D$ 个同形状的矩阵做元素乘积，每次乘积之后求和得到一个标量，然后将每个标量 concat 到一起，最终得到一个维度为 D 的向量；</p>
+</li>
+<li><p>使用 $H_{k+1}$个不同的权重矩阵 $W$ ，即可得到 $H_{k+1}$不同的 D 维向量，拼接在一起即为下一层的特征矩阵 $(H_{k+1},D)$。</p>
+</li>
+</ul>
+</li>
+<li><p>因为每一层只包含某一阶的特征组合，所以每一层的特征矩阵都会被使用来对最终结果作预测，将每层特征矩阵的 Hi 个特征在 D 维度做 sum pooling, 总共会得到 $H_1+…+H_k$ 个标量，concat 拼接在一起得到的一维向量作为 CIN 层的输出，后续与 Linear 和 DNN 部分的输出拼接做最终的预测。</p>
+</li>
+</ol>
+<p>(因为每次矩阵 W 都会将特征两两交互得到的三维矩阵压缩成一维，所以叫做压缩感知)</p>
+<h3 id="优点：-4"><a href="#优点：-4" class="headerlink" title="优点："></a><strong>优点：</strong></h3><p>使用 vector-wise 的方式，通过特征的元素积来进行特征交互，将一个特征域的元素整体考虑，比 bit-wise 方式更 make sence 一些；</p>
+<h3 id="缺点：-5"><a href="#缺点：-5" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><p>CIN 层的复杂度通常比较大，它并不具有像 DCN 的 cross layer 那样线性复杂度，它的复杂度通常是平方级的，因为需要计算两个特征矩阵中特征的两两交互，这就给模型上线带来压力。</p>
+<hr>
+<h2 id="FNN"><a href="#FNN" class="headerlink" title="FNN"></a>FNN</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1601.02376">FNN</a></p>
+</blockquote>
+<h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>也是 FM 与 DNN 结合的产物，不同的是，FNN 采用的是串行拼接的结合方式，将 DNN 接在 FM 层后方，以减轻全连接层构造隐式特征的工作。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409110601102.png" alt="image-20250409110601102"></p>
+<h4 id="Sparse-Binary-Features"><a href="#Sparse-Binary-Features" class="headerlink" title="Sparse Binary Features"></a>Sparse Binary Features</h4><p>模型的原始输入为稀疏的 0-1 向量，由稠密的数值特征和经过 onehot 处理得到的类别特征拼接而成，图中一个 field 表示一个经过 onehot 的类别特征。</p>
+<h4 id="Dense-Real-Layer"><a href="#Dense-Real-Layer" class="headerlink" title="Dense Real Layer"></a>Dense Real Layer</h4><p>该层为嵌入层，作用是将每个 field 中的稀疏 01 向量，单独映射得到低维稠密特征（图中为 4 维的稠密特征，即 FM 隐向量的维度）。跟一般的Embedding 嵌入层不同是，该嵌入层的权重由 FM 训练得到的隐向量初始化得到。</p>
+<p>每个 field 的输入为一个 01 向量，只有一个特征的取值为 1，乘上嵌入矩阵即可得到该特征对应的隐向量，数值特征直接乘上自己的隐向量即可，然后将所有 field 映射得到的隐向量 concat 作为全连接的输入即可。（相当于输入的每维特征都乘上自己对应的隐向量，只不过每个 field 只会得到一个隐向量，然后横向拼接所有隐向量即为输入）</p>
+<h4 id="Hidden-Layer-1"><a href="#Hidden-Layer-1" class="headerlink" title="Hidden Layer"></a>Hidden Layer</h4><p>标准的三层全连接，最后一层映射到一维接 sigmoid 得到概率输出，即为预测的 CTR 概率。</p>
+<h3 id="优点：-5"><a href="#优点：-5" class="headerlink" title="优点："></a><strong>优点：</strong></h3><ol>
+<li>将 FM 学习得到的隐向量作为 DNN 的输入，隐向量包含了 FM 习得的先验知识，可减轻 DNN 的学习压力；</li>
+<li>FM 只考虑到了二阶特征交互，忽略了高阶特征，后面接 DNN 可弥补该缺陷，提升模型表达能力。</li>
+</ol>
+<h3 id="缺点：-6"><a href="#缺点：-6" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li>采用两阶段、非端到端的训练方式，不利于模型的线上部署；</li>
+<li>将 FM 的隐向量直接拼接作为 DNN 的输入，忽略了 field 的概念；</li>
+<li>FNN 未考虑低阶特征组合，低阶、高阶特征是同等重要的。</li>
+</ol>
+<hr>
+<h2 id="PNN"><a href="#PNN" class="headerlink" title="PNN"></a>PNN</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1611.00144">PNN</a></p>
+</blockquote>
+<h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>通过引入特征交互层Product Layer，显式的对特征进行交互，以提升模型的表达能力。</p>
+<h3 id="原理：-6"><a href="#原理：-6" class="headerlink" title="原理："></a>原理：</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409111248356.png" alt="image-20250409111248356"></p>
+<h4 id="Embedding-Layer"><a href="#Embedding-Layer" class="headerlink" title="Embedding Layer"></a>Embedding Layer</h4><p>该层为嵌入层，用于将 input 中的每个 Field 特征映射成低维稠密特征，然后每个特征的 embedding 横向拼接，作为下一层的输入。</p>
+<h4 id="Product-Layer"><a href="#Product-Layer" class="headerlink" title="Product Layer"></a>Product Layer</h4><p>该层为特征交互层，由 z 和 p 两部分组成，其中 z 为上层的输出结果，p 为上层输出的特征交互结果，低维与高维特征的直接拼接。</p>
+<p>Product Layer 以 Field 为粒度进行特征之间的交叉，交叉方式有两种：<strong>内积 IPNN</strong> 和 <strong>外积 OPNN</strong>。</p>
+<p>Embedding Layer输出的张量形状为 [None, field, k]，其中 None 表示 batchsize 大小，field 为原始输入的特征个数，k 为每个特征嵌入之后对应稠密向量维度。</p>
+<p><strong>Inner Product：</strong></p>
+<p>filed 个特征两两进行内积，每两个 k 维特征的内积可得到一个一维变量，总共可得到 field * (field-1) &#x2F; 2 个变量，拼接在一起即为特征交互的结果 p，形状为 [None，field * (field-1) &#x2F; 2] 。</p>
+<p><strong>Outer Product：</strong></p>
+<p>与内积不同的是，每两个 k 维特征的外积不再是一个一维变量，而是形状为 [k, k] 的二维张量。</p>
+<p>所以又引入等形状的权重矩阵 W，与二维张量进行对应元素乘积，然后求和得到一维变量。</p>
+<p>文中引入 field * (field-1) &#x2F; 2 个可训练的权重矩阵，与每个二维张量计算元素积，得到 field * (field-1) &#x2F; 2 个变量，然后拼接得到特征交互的结果 p，形状跟内积结果相同，也为 [None，field * (field-1) &#x2F; 2] 。</p>
+<p>外积与内积的唯一差别，就是多了一次矩阵的元素积计算。</p>
+<p>得到特征交互结果之后，与上层输出 z 拼接即为 Product Layer 层的输出。</p>
+<p>Tips: 内积与外积两种特征交互方式可同时使用，把内积外积的交互结果横向拼接即可。</p>
+<h4 id="Hidden-Layer-2"><a href="#Hidden-Layer-2" class="headerlink" title="Hidden Layer"></a>Hidden Layer</h4><p>三层全连接，最后一层映射到一维接 sigmoid 得到概率输出，即为预测的 CTR 概率。</p>
+<h3 id="优点：-6"><a href="#优点：-6" class="headerlink" title="优点："></a><strong>优点：</strong></h3><ol>
+<li>显式的进行特征交互，提高模型表达能力；</li>
+<li>以 field 为粒度进行特征交互，<strong>保留的域的概念</strong>；</li>
+<li>同时保留了<strong>低维与高维特征</strong></li>
+</ol>
+<h3 id="缺点：-7"><a href="#缺点：-7" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li>外积交互方式<strong>参数量较大</strong>，随着特征维度平方级增长；</li>
+</ol>
+<hr>
+<h2 id="DIN"><a href="#DIN" class="headerlink" title="DIN"></a>DIN</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.06978">DIN</a></p>
+</blockquote>
+<h3 id="介绍：-5"><a href="#介绍：-5" class="headerlink" title="介绍："></a>介绍：</h3><p>通过引入 Attention Layer，赋予用户行为不同的重要性权重，获得更具表达能力的用户兴趣表示。</p>
+<h3 id="原理：-7"><a href="#原理：-7" class="headerlink" title="原理："></a>原理：</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409112736236.png" alt="image-20250409112736236"></p>
+<p>阿里的推荐系统主要用到四组特征：用户画像特征、用户行为特征、候选商品、上下文特征。本文只需关注用户行为特征如何处理即可。Base 模型的做法是将用户点击的商品序列，简单的进行 SUM Pooling，然后将聚合得到的 embedding 向量，作为用户的兴趣表示。这种做法的缺陷也很明显，简单的累加无法突出某些商品的重要性。对于与候选商品具有强关联性的 item，应该给予更大的权重，让其在提取用户兴趣时发挥更大的作用。</p>
+<h4 id="Activation-Unit"><a href="#Activation-Unit" class="headerlink" title="Activation Unit"></a>Activation Unit</h4><p>主要关注 Activation Unit 内的权重计算方式，该单元的输入为：用户点击的商品(Inputs from User)、候选商品(Inputs from Ad)。</p>
+<ol>
+<li>计算点击的商品与候选商品的外积，得到一维embedding；</li>
+<li>将外积结果与原始输入 Concat 在一起；</li>
+<li>后面结两层全连接，隐层激活函数使用 PRelu或Dice，输出映射到一维，表示权重分数。</li>
+</ol>
+<p>用户点击的多个商品，分别按照以上方式与候选商品计算权重，然后加权再取 SUM Pooling 即可。这样就突出了重要商品发挥的作用，可提取到更精确的用户兴趣表示。</p>
+<img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409113402552.png" alt="image-20250409113402552" style="zoom:50%;" />
+
+<p>Dice 激活函数是对 PRelu 的改进。因为 Relu、PRelu 的梯度发生变化的点都固定在 x&#x3D;0 处，神经网络每层的输出往往具有不同分布，所以固定在一处无法适应多样的分布，所以变化点应随着数据的分布自适应调整。</p>
+<h3 id="优点：-7"><a href="#优点：-7" class="headerlink" title="优点："></a><strong>优点：</strong></h3><ol>
+<li>引入 Attention 机制，更精准的提取用户兴趣；</li>
+<li>引入 Dice 激活函数与，并优化了稀疏场景中的 L2 正则方式。</li>
+</ol>
+<h3 id="缺点：-8"><a href="#缺点：-8" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li>没有考虑用户点击商品的相对位置信息，后续的 DIEN 也是针对这点进行了改进。</li>
+</ol>
+<hr>
+<h2 id="DIEN"><a href="#DIEN" class="headerlink" title="DIEN"></a>DIEN</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1809.03672">DIEN</a></p>
+</blockquote>
+<h3 id="介绍：-6"><a href="#介绍：-6" class="headerlink" title="介绍："></a>介绍：</h3><p>针对行为的时间顺序进行建模，挖掘用户的兴趣及兴趣变化趋势。</p>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409113620497.png" alt="image-20250409113620497"></p>
+<h4 id="Behavior-Layer"><a href="#Behavior-Layer" class="headerlink" title="Behavior Layer"></a>Behavior Layer</h4><p>嵌入层，对行为序列中的每个 item 进行嵌入，得到稠密向量表示 e(i)。除此之外，其他三组特征：候选item、上下文特征、用户画像特征，同样需要进行嵌入。</p>
+<h4 id="Interest-Extractor-Layer"><a href="#Interest-Extractor-Layer" class="headerlink" title="Interest Extractor Layer"></a>Interest Extractor Layer</h4><p>兴趣提取层，该层使用 GRU来挖掘行为被点击的时序信息，输入为嵌入之后的行为序列 e(i)，每时刻都会输出一个隐状态 h(i)，表示 i 时刻用户的兴趣表示。使用 GRU 能够挖掘到时序信息，但又丢弃了 DIN 引入的注意力机制，所以 DIEN 又加了第二层 GRU（兴趣变化提取层），并将 Attention 融入其中。</p>
+<h4 id="Interest-Evolving-Layer"><a href="#Interest-Evolving-Layer" class="headerlink" title="Interest Evolving Layer"></a>Interest Evolving Layer</h4><h5 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h5><p>兴趣变化提取层，该层为 GRU + Attention 的组合层，输入来自上层 GRU 输出的隐状态序列，输出只有最后一个 GRU 单元的隐状态 h(T)，表示的是从每时刻的用户兴趣中提取的兴趣变化趋势。</p>
+<p>Attention 权重的计算公式：<br>$$<br>a_{t}&#x3D;\frac{\exp \left(\mathbf{h}<em>{t} W \mathbf{e}</em>{a}\right)}{\sum_{j&#x3D;1}^{T} \exp \left(\mathbf{h}<em>{j} W \mathbf{e}</em>{a}\right)}<br>$$</p>
+<h5 id="GRU-with-attentional-update-gate"><a href="#GRU-with-attentional-update-gate" class="headerlink" title="GRU with attentional update gate"></a><strong>GRU with attentional update gate</strong></h5><p>$$<br>\begin{aligned}\tilde{\mathbf{u}}<em>{t}^{\prime} &amp; &#x3D;a</em>{t} * \mathbf{u}<em>{t}^{\prime}, \\mathbf{h}</em>{t}^{\prime} &amp; &#x3D;\left(1-\tilde{\mathbf{u}}<em>{t}^{\prime}\right) \circ \mathbf{h}</em>{t-1}^{\prime}-\tilde{\mathbf{u}}<em>{t}^{\prime} \circ \tilde{\mathbf{h}}</em>{t}^{\prime}\end{aligned}<br>$$</p>
+<p>将注意力权重 $a_t$ 乘到更新门 $u_t$ 上，然后再用更新门控制当前信息与历史信息保留的比例。该方式同样需要修改 GRU 单元的计算方式。</p>
+<p>目的：给与权重大的隐状态更多的关注。</p>
+<h5 id="auxiliary-loss"><a href="#auxiliary-loss" class="headerlink" title="auxiliary loss"></a>auxiliary loss</h5><p>GRU 层存在两个问题，一是在<strong>长序列场景中难以充分训练</strong>，二是 <strong>hidden states 缺少监督</strong>，只有最后时刻的隐状态上会产生 loss。</p>
+<p>针对这两个问题，文中提出了辅助 loss计算方法，并将其应用在了第一层 GRU 上。如所示，$e(t+1)$ 是在 $t+1$ 时刻用户点击的 item，$h(t)$ 是 $t$ 时刻 GRU 输出的隐状态，$e(t+1)’$ 是负采样得到的没有被点击的 item。</p>
+<p>这样就转换成了判断是否点击的二分类问题，按照下式计算 loss 即可。<br>$$<br>\begin{aligned}L_{a u x}&#x3D;- &amp; \frac{1}{N}\left(\sum_{i&#x3D;1}^{N} \sum_{t} \log \sigma\left(\mathbf{h}<em>{t}^{i}, \mathbf{e}</em>{b}^{i}[t+1]\right)\right. \+ &amp; \left.\log \left(1-\sigma\left(\mathbf{h}<em>{t}^{i}, \hat{\mathbf{e}}</em>{b}^{i}[t+1]\right)\right)\right)\end{aligned}<br>$$</p>
+<h3 id="优点：-8"><a href="#优点：-8" class="headerlink" title="优点："></a><strong>优点：</strong></h3><ol>
+<li>引入 GRU 层，挖掘用户兴趣的同时，<strong>引入了行为发生的时序信息</strong>；</li>
+<li>引入 GRU 与 Attention 融合层，<strong>挖掘用户的兴趣变化趋势</strong>。</li>
+</ol>
+<h3 id="缺点：-9"><a href="#缺点：-9" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li>GRU 层<strong>难以训练充分</strong>，模型并行性较差，给模型上线带来压力；</li>
+<li>模型训练复杂度<strong>随着行为序列长度的增加而增长</strong>。</li>
+</ol>
+<hr>
+<h1 id="DSIN"><a href="#DSIN" class="headerlink" title="DSIN"></a>DSIN</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.06482">DSIN</a></p>
+</blockquote>
+<h3 id="介绍：-7"><a href="#介绍：-7" class="headerlink" title="介绍："></a>介绍：</h3><p>深度会话兴趣网络 DSIN，是将行为序列划分为多个 Session，然后针对每个 Session 去挖掘用户的兴趣以及兴趣变化趋势。在真实场景中，用户短时间内浏览的商品往往比较相似，兴趣比较集中，所以以 Session 为粒度进行兴趣的提取会更加准确。</p>
+<h3 id="原理：-8"><a href="#原理：-8" class="headerlink" title="原理："></a>原理：</h3><p><img src="C:\Users\LPR\AppData\Roaming\Typora\typora-user-images\image-20250409114740778.png" alt="image-20250409114740778"></p>
+<h4 id="Session-Division-Layer"><a href="#Session-Division-Layer" class="headerlink" title="Session Division Layer"></a>Session Division Layer</h4><p>该层为会话切分层，用于将行为 Sequence 划分为多个 Session。划分规则是：如果两个行为发生的时间间隔很长或者大于设定的阈值，就可以以此为分割点，这样划分得到的每个 Session 中的行为发生时间比较紧凑，用户的兴趣也会比较集中。</p>
+<p>为了保证每个 Session 中行为数量一致，通常会使用截断处理或者 padding。</p>
+<h4 id="Session-Interest-Extractor-Layer"><a href="#Session-Interest-Extractor-Layer" class="headerlink" title="Session Interest Extractor Layer"></a>Session Interest Extractor Layer</h4><p>该层为会话兴趣提取层，这里使用 Transformer 中的一个 Encoder 单元进行兴趣的提取。因为 Transformer 抛弃了顺序输入的方式，所以模型不会自动考虑输入 Session 的相对位置信息，因此在输入之前需要对 Session 进行位置编码。</p>
+<h5 id="Bias-Encoding："><a href="#Bias-Encoding：" class="headerlink" title="Bias Encoding："></a><strong>Bias Encoding：</strong></h5><p>跟一般的编码方式不同的是，这里不仅需要对每个 Session 进行位置编码，同时也需要对 Session 中的每个行为进行位置编码，该模块统称为 Bias Encoding。<br>$$<br>\mathbf{B E}<em>{(k, t, c)}&#x3D;\mathbf{w}</em>{k}^{K}+\mathbf{w}<em>{t}^{T}+\mathbf{w}</em>{c}^{C}<br>$$<br>BE 由三个一维向量累加得到，其中 $W^K$ 为 $K$ 维向量，用于区分 $K$ 个 Session 的位置差异， $W^T$ 为 T 维向量，用于区分每个 Session 中 T 个行为的位置差异， $W^C$ 为 C 维向量，用于区分每个 C 维行为 embedding 不同维度的位置差异。</p>
+<p>向量相加得到形状为 (K，T，C) 的 BE 矩阵，该形状和上层的输出 Q 是一样的，直接相加即可，这样每个会话、会话中的每个行为、行为 embedding 的每个位置都加上了偏置项。<br>$$<br>\mathbf{Q}&#x3D;\mathbf{Q}+\mathbf{B E}<br>$$</p>
+<h4 id="Session-Interest-Interacting-Layer"><a href="#Session-Interest-Interacting-Layer" class="headerlink" title="Session Interest Interacting Layer"></a>Session Interest Interacting Layer</h4><p>该层为兴趣交互层，由双层双向LSTM 构成，类似于 DIEN 中的双层 GRU，用于提取用户兴趣的变化趋势。</p>
+<h4 id="Session-Interest-Activating-Layer"><a href="#Session-Interest-Activating-Layer" class="headerlink" title="Session Interest Activating Layer"></a>Session Interest Activating Layer</h4><p>该层为兴趣激活层，以待推荐的 Item Profile 向量为 Query，分别计算兴趣序列 I 与兴趣变化序列 H 的重要性权重，突出关键兴趣的重要性。权重计算方式采用内积形式，公式如下:<br>$$<br>\begin{aligned}a_{k}^{I} &amp; &#x3D;\frac{\left.\exp \left(\mathbf{I}<em>{k} \mathbf{W}^{I} \mathbf{X}^{I}\right)\right)}{\sum</em>{k}^{K} \exp \left(\mathbf{I}<em>{k} \mathbf{W}^{I} \mathbf{X}^{I}\right)} \\mathbf{U}^{I} &amp; &#x3D;\sum</em>{k}^{K} a_{k}^{I} \mathbf{I}<em>{k}\end{aligned}<br>$$<br>$X^I$ 为目标 Item，计算每个兴趣 I 的权重，然后加权累加得到 $U^I$。<br>$$<br>\begin{aligned}a</em>{k}^{H} &amp; &#x3D;\frac{\left.\exp \left(\mathbf{H}<em>{k} \mathbf{W}^{H} \mathbf{X}^{I}\right)\right)}{\sum</em>{k}^{K} \exp \left(\mathbf{H}<em>{k} \mathbf{W}^{H} \mathbf{X}^{I}\right)} \\mathbf{U}^{H} &amp; &#x3D;\sum</em>{k}^{K} a_{k}^{H} \mathbf{H}_{k}\end{aligned}<br>$$</p>
+<p>同理，计算每个兴趣变化 H 的权重，然后加权累加得到 $U^H$。</p>
+<p>最后将四部分向量横向拼接，输入全连接做最后的预测即可</p>
+<h3 id="优点：-9"><a href="#优点：-9" class="headerlink" title="优点："></a><strong>优点：</strong></h3><ol>
+<li>以会话粒度进行兴趣的提取，提取结果更精确；</li>
+<li>利用 Transformer Encoder 挖掘用户兴趣，学习能力更强；</li>
+<li>引入 双向 LSTM，挖掘用户的兴趣变化趋势;</li>
+<li>引入 Attention 机制，突出关键行为的重要性。</li>
+</ol>
+<h3 id="缺点：-10"><a href="#缺点：-10" class="headerlink" title="缺点："></a><strong>缺点：</strong></h3><ol>
+<li>引入 Encoder 单元，双层的LSTM，训练复杂度大，给模型上线带来压力。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://yanglingsanshan.github.io">舲.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://yanglingsanshan.github.io/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/">https://yanglingsanshan.github.io/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://yanglingsanshan.github.io" target="_blank">YangLingSanShan</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">舲.</div><div class="author-info-description">马孔多在下雨</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">1</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/YangLingSanShan"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%AC%E5%9B%9E%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">召回：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E5%8F%AC%E5%9B%9E%E7%AE%97%E6%B3%95%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">传统召回算法：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ItemCF"><span class="toc-number">1.1.1.</span> <span class="toc-text">ItemCF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UserCF"><span class="toc-number">1.1.2.</span> <span class="toc-text">UserCF</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CTR%E9%A2%84%E4%BC%B0"><span class="toc-number">2.</span> <span class="toc-text">CTR预估</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-%E5%9B%A0%E5%AD%90%E5%88%86%E8%A7%A3%E6%9C%BA"><span class="toc-number">2.1.</span> <span class="toc-text">FM 因子分解机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="toc-number">2.1.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">2.1.2.</span> <span class="toc-text">原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-number">2.1.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FFM"><span class="toc-number">2.2.</span> <span class="toc-text">FFM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-1"><span class="toc-number">2.2.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide-Deep"><span class="toc-number">2.3.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-2"><span class="toc-number">2.3.2.</span> <span class="toc-text">原理：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Wide%E9%83%A8%E5%88%86"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">Wide部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Deep%E9%83%A8%E5%88%86"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">Deep部分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.3.3.</span> <span class="toc-text">优点:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-2"><span class="toc-number">2.3.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepFM"><span class="toc-number">2.4.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A-3"><span class="toc-number">2.4.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-3"><span class="toc-number">2.4.2.</span> <span class="toc-text">原理：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sparse-Features"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">Sparse Features</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dense-Embeddings"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">Dense Embeddings</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FM-Layer"><span class="toc-number">2.4.2.3.</span> <span class="toc-text">FM Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hidden-Layer"><span class="toc-number">2.4.2.4.</span> <span class="toc-text">Hidden Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Output-Units"><span class="toc-number">2.4.2.5.</span> <span class="toc-text">Output Units</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-2"><span class="toc-number">2.4.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-3"><span class="toc-number">2.4.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep-Cross%EF%BC%88DCN%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">Deep&amp;Cross（DCN）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A-4"><span class="toc-number">2.5.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-4"><span class="toc-number">2.5.2.</span> <span class="toc-text">原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-3"><span class="toc-number">2.5.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-4"><span class="toc-number">2.5.4.</span> <span class="toc-text">缺点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">2.5.5.</span> <span class="toc-text">其它</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xDeepFM"><span class="toc-number">2.6.</span> <span class="toc-text">xDeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.6.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-5"><span class="toc-number">2.6.2.</span> <span class="toc-text">原理：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CIN"><span class="toc-number">2.6.2.1.</span> <span class="toc-text">CIN</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-4"><span class="toc-number">2.6.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-5"><span class="toc-number">2.6.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FNN"><span class="toc-number">2.7.</span> <span class="toc-text">FNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="toc-number">2.7.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">2.7.2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sparse-Binary-Features"><span class="toc-number">2.7.2.1.</span> <span class="toc-text">Sparse Binary Features</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dense-Real-Layer"><span class="toc-number">2.7.2.2.</span> <span class="toc-text">Dense Real Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hidden-Layer-1"><span class="toc-number">2.7.2.3.</span> <span class="toc-text">Hidden Layer</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-5"><span class="toc-number">2.7.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-6"><span class="toc-number">2.7.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PNN"><span class="toc-number">2.8.</span> <span class="toc-text">PNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D-2"><span class="toc-number">2.8.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-6"><span class="toc-number">2.8.2.</span> <span class="toc-text">原理：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Embedding-Layer"><span class="toc-number">2.8.2.1.</span> <span class="toc-text">Embedding Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Product-Layer"><span class="toc-number">2.8.2.2.</span> <span class="toc-text">Product Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hidden-Layer-2"><span class="toc-number">2.8.2.3.</span> <span class="toc-text">Hidden Layer</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-6"><span class="toc-number">2.8.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-7"><span class="toc-number">2.8.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DIN"><span class="toc-number">2.9.</span> <span class="toc-text">DIN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A-5"><span class="toc-number">2.9.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-7"><span class="toc-number">2.9.2.</span> <span class="toc-text">原理：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Activation-Unit"><span class="toc-number">2.9.2.1.</span> <span class="toc-text">Activation Unit</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-7"><span class="toc-number">2.9.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-8"><span class="toc-number">2.9.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DIEN"><span class="toc-number">2.10.</span> <span class="toc-text">DIEN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A-6"><span class="toc-number">2.10.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-number">2.10.2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Behavior-Layer"><span class="toc-number">2.10.2.1.</span> <span class="toc-text">Behavior Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Interest-Extractor-Layer"><span class="toc-number">2.10.2.2.</span> <span class="toc-text">Interest Extractor Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Interest-Evolving-Layer"><span class="toc-number">2.10.2.3.</span> <span class="toc-text">Interest Evolving Layer</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Attention"><span class="toc-number">2.10.2.3.1.</span> <span class="toc-text">Attention</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#GRU-with-attentional-update-gate"><span class="toc-number">2.10.2.3.2.</span> <span class="toc-text">GRU with attentional update gate</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#auxiliary-loss"><span class="toc-number">2.10.2.3.3.</span> <span class="toc-text">auxiliary loss</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-8"><span class="toc-number">2.10.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-9"><span class="toc-number">2.10.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DSIN"><span class="toc-number">3.</span> <span class="toc-text">DSIN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A-7"><span class="toc-number">3.0.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A-8"><span class="toc-number">3.0.2.</span> <span class="toc-text">原理：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Session-Division-Layer"><span class="toc-number">3.0.2.1.</span> <span class="toc-text">Session Division Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Session-Interest-Extractor-Layer"><span class="toc-number">3.0.2.2.</span> <span class="toc-text">Session Interest Extractor Layer</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Bias-Encoding%EF%BC%9A"><span class="toc-number">3.0.2.2.1.</span> <span class="toc-text">Bias Encoding：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Session-Interest-Interacting-Layer"><span class="toc-number">3.0.2.3.</span> <span class="toc-text">Session Interest Interacting Layer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Session-Interest-Activating-Layer"><span class="toc-number">3.0.2.4.</span> <span class="toc-text">Session Interest Activating Layer</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-9"><span class="toc-number">3.0.3.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A-10"><span class="toc-number">3.0.4.</span> <span class="toc-text">缺点：</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/" title="推荐系统学习（CTR预估）">推荐系统学习（CTR预估）</a><time datetime="2025-04-09T06:46:44.000Z" title="发表于 2025-04-09 14:46:44">2025-04-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 舲.</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
