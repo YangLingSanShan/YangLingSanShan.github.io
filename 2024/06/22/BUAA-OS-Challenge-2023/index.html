@@ -159,21 +159,49 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="web_bg" style="background-image: url(/img/luoxiaohan_1.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YangLingSanShan</span></a><a class="nav-page-title" href="/"><span class="site-name">BUAA-OS-Challenge-2024</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">BUAA-OS-Challenge-2024</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-22T08:00:00.000Z" title="发表于 2024-06-22 16:00:00">2024-06-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-11T09:19:28.583Z" title="更新于 2025-04-11 17:19:28">2025-04-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><h2>前言</h2>
-<p>本文是对BUAA操作系统课程挑战性任务中shell增强的总结，其目的是实现一个功能更强大的shell（与linux更加接近）。</p>
-<p><strong>宇宙安全声明</strong>：</p>
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="web_bg" style="background-image: url(/img/luoxiaohan_1.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YangLingSanShan</span></a><a class="nav-page-title" href="/"><span class="site-name">BUAA-OS-Challenge-2024</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">BUAA-OS-Challenge-2024</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-22T08:00:00.000Z" title="发表于 2024-06-22 16:00:00">2024-06-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-11T09:19:28.583Z" title="更新于 2025-04-11 17:19:28">2025-04-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><h2>
+前言
+</h2>
+<p>
+本文是对BUAA操作系统课程挑战性任务中shell增强的总结，其目的是实现一个功能更强大的shell（与linux更加接近）。
+</p>
+<p>
+<strong>宇宙安全声明</strong>：
+</p>
 <ol>
-<li>本文行文过程为笔者实现Shell增强的流程，与指导书顺序不同。</li>
-<li>本文借鉴参考了往年功能要求相似的部分，但由于2024年OS课程对shell增强进行评测，故修改了往年的部分bug</li>
-<li>本文是在通过测评的基础上，一定会存在未评测的bug。</li>
+<li>
+本文行文过程为笔者实现Shell增强的流程，与指导书顺序不同。
+</li>
+<li>
+本文借鉴参考了往年功能要求相似的部分，但由于2024年OS课程对shell增强进行评测，故修改了往年的部分bug
+</li>
+<li>
+本文是在通过测评的基础上，一定会存在未评测的bug。
+</li>
 </ol>
-<h2>实现对<code>.b</code>的忽略</h2>
-<h3>目标：</h3>
-<p>你需要实现不带 <code>.b</code> 后缀的指令，但仍需兼容带有 <code>.b</code> 后缀的指令，如 <code>ls</code> 与 <code>ls.b</code> 都应能够正确列出当前目录下的文件。</p>
-<h3>思路：</h3>
-<p>对于<code>ls</code>等指令，我们在lab6中实现了带有<code>.b</code>格式的指令，其判别方式为作为一个token传入spawn函数进行解析。因此，为实现对<code>.b</code>的忽略，需要修改<code>spawn</code>函数。</p>
-<h2>实现方法：</h2>
-<p><code>spawn</code>代码片段如下<strong>（往年这部分实现已经很多）</strong>：</p>
+<h2>
+实现对<code>.b</code>的忽略
+</h2>
+<h3>
+目标：
+</h3>
+<p>
+你需要实现不带 <code>.b</code> 后缀的指令，但仍需兼容带有
+<code>.b</code> 后缀的指令，如 <code>ls</code> 与 <code>ls.b</code>
+都应能够正确列出当前目录下的文件。
+</p>
+<h3>
+思路：
+</h3>
+<p>
+对于<code>ls</code>等指令，我们在lab6中实现了带有<code>.b</code>格式的指令，其判别方式为作为一个token传入spawn函数进行解析。因此，为实现对<code>.b</code>的忽略，需要修改<code>spawn</code>函数。
+</p>
+<h2>
+实现方法：
+</h2>
+<p>
+<code>spawn</code>代码片段如下<strong>（往年这部分实现已经很多）</strong>：
+</p>
 <pre><code class="language-c">int fd;
 if ((fd = open(prog, O_RDONLY)) < 0) &#123;       // 检测是否以.b结尾，如果是，则直接打开
         int len = strlen(prog);
@@ -190,24 +218,48 @@ if ((fd = open(prog, O_RDONLY)) < 0) &#123;       // 检测是否以.b结尾，�
             return fd;
         &#125;
 &#125;</code></pre>
-<h2>实现touch，mkdir，rm这三个外部指令</h2>
-<h3>实现流程：</h3>
+<h2>
+实现touch，mkdir，rm这三个外部指令
+</h2>
+<h3>
+实现流程：
+</h3>
 <ol>
-<li>在<code>user/lib/file.c</code>中实现创建文件、创建目录、删除文件等一系列函数。</li>
-<li>在user/目录下创建对应的<code>.c</code>文件，并将<code>.b</code>烧录进入这一目录下的<code>include.mk</code>文件中</li>
-<li>在<code>.c</code>文件中，调用已经建立好的函数，实现对应功能。同时，需要支持对于额外参数的识别。</li>
+<li>
+在<code>user/lib/file.c</code>中实现创建文件、创建目录、删除文件等一系列函数。
+</li>
+<li>
+在user/目录下创建对应的<code>.c</code>文件，并将<code>.b</code>烧录进入这一目录下的<code>include.mk</code>文件中
+</li>
+<li>
+在<code>.c</code>文件中，调用已经建立好的函数，实现对应功能。同时，需要支持对于额外参数的识别。
+</li>
 </ol>
-<h3>touch实现</h3>
-<p>由于在lab5中实现的文件系统不支持创建文件这一功能，因此需要提供在文件系统中创建文件的接口：</p>
+<h3>
+touch实现
+</h3>
+<p>
+由于在lab5中实现的文件系统不支持创建文件这一功能，因此需要提供在文件系统中创建文件的接口：
+</p>
 <pre><code class="language-C">void serve_create(u_int envid, struct Fsreq_create *rq);    //路径 /fs/serv.c
-<p>int fsipc_create(const char* path, int type);               //路径 /user/lib/fsipc.c</p>
-<p>int create(const char* path, int type);                     //路径 /user/lib/file.c<br>
-int createDir(const char* path);                            //路径 /user/lib/file.c （实际上可以与create共用）</code></pre></p>
-<p>对于<code>create</code>的实现，调用<code>fsipc_create</code>即可。</p>
-<p>在<code>touch.c</code>文件的实现中，只需要依次遍历传入的参数，并将<code>type</code>设置为REG即可（fd用于检测异常）：</p>
+
+int fsipc_create(const char* path, int type);               //路径 /user/lib/fsipc.c
+
+int create(const char* path, int type);                     //路径 /user/lib/file.c
+int createDir(const char* path);                            //路径 /user/lib/file.c （实际上可以与create共用）</code></pre>
+<p>
+对于<code>create</code>的实现，调用<code>fsipc_create</code>即可。
+</p>
+<p>
+在<code>touch.c</code>文件的实现中，只需要依次遍历传入的参数，并将<code>type</code>设置为REG即可（fd用于检测异常）：
+</p>
 <pre><code class="language-C">fd = create(argv[i], FTYPE_REG)</code></pre>
-<h3>mkdir实现</h3>
-<p>简单的<code>mkdir</code>可以参考往年博客，与上面<code>touch</code>的实现相似，这里主要介绍一下<code>-p</code>参数的实现：</p>
+<h3>
+mkdir实现
+</h3>
+<p>
+简单的<code>mkdir</code>可以参考往年博客，与上面<code>touch</code>的实现相似，这里主要介绍一下<code>-p</code>参数的实现：
+</p>
 <pre><code class="language-c">int len = strlen(argv[i]);
 for(int j = 0; j < len; j++) &#123;
     if(argv[i][j] == '/') &#123;
@@ -218,10 +270,18 @@ for(int j = 0; j < len; j++) &#123;
     temp[j] = argv[i][j];
 &#125;
 r = createDir(argv[i]);</code></pre>
-<p>实现的代码片段如上，这里由于需要递归创建，于是每次读到'\'就进行一次创建即可（此时<code>-p</code>忽略了错误，即部分根目录存在也可）。</p>
-<h3>rm实现</h3>
-<p>这是2024年新增加的指令，但在<code>file.c</code>文件中已经存在了对remove的支持接口。在<code>rm.c</code>中，本人的实现仅仅是调用remove，并给remove函数增加一个是否允许删除目录(<code>-r</code>参数)的标记。</p>
-<p>在原来的remove函数中仅有一行<code>fsipc_remove(path)</code>。因此，需要对remove进行修改：</p>
+<p>
+实现的代码片段如上，这里由于需要递归创建，于是每次读到’'就进行一次创建即可（此时<code>-p</code>忽略了错误，即部分根目录存在也可）。
+</p>
+<h3>
+rm实现
+</h3>
+<p>
+这是2024年新增加的指令，但在<code>file.c</code>文件中已经存在了对remove的支持接口。在<code>rm.c</code>中，本人的实现仅仅是调用remove，并给remove函数增加一个是否允许删除目录(<code>-r</code>参数)的标记。
+</p>
+<p>
+在原来的remove函数中仅有一行<code>fsipc_remove(path)</code>。因此，需要对remove进行修改：
+</p>
 <pre><code class="language-c">int r;
 if((r = open(path, O_EXCL)) != -10) &#123;
     if((r = open(path, O_MKDIR)) == 3) &#123;
@@ -238,44 +298,106 @@ if((r = open(path, O_EXCL)) != -10) &#123;
     //-3 表示成功移除reg
     //-10表示无法移除（未找到)
 return r;</code></pre>
-<p>这里的实现确实有些潦草（有偷奸耍滑之嫌），这段代码的意思是尝试创建一个文件，如果存在（创建失败）则证明已有文件，那么将其移除；如果不存在（创建成功），则<code>rm</code>无效，然后为防止文件多出来，于是删除。（但这里存在dirty的<code>debugf</code>输出，本人认为由于已经删除这个文件了，dirty什么的已经无所谓了，于是无视了，但仔细思考下还是存在问题，一定有更好的实现）</p>
-<h2>反引号的实现</h2>
-<h3>目标：</h3>
-<p>将反引号内指令执行的所有标准输出替换为 <code>echo</code> 的参数，即输出反引号内指令执行的结果。</p>
-<h3>思路：</h3>
-<p>笔者在实现了单一的echo（不添加重定位）后提交了评测，发现通过了（发现评测很弱）就放在了那里，这里的实现是弱版本的反引号。具体的思路是，在<code>_gettoken</code>中读出反引号后，直接将匹配的反引号（不考虑反引号的嵌套）之间的内容全部读出，然后扔到runcmd中。(实现与双引号类似，这里暂且省略)</p>
-<h2>追加重定向的实现</h2>
-<h3>目标：</h3>
-<p>实现对文件的追加写入</p>
-<h3>思路：</h3>
-<p>对于'>'，我们在lab6中已经实现了覆盖重定向写入。所以对于‘>>‘的实现，可以依托于这个。即读到一个'>'后，判断后一个字符是不是'>'，是的话则设置标记，并将<code>s++</code>越过这两个，返回'>'。</p>
-<p>对于追加写，笔者实现了<code>O_APPEND</code>,即写入前，将偏移量改为文件大小（此时<code>O_APPEND</code>同时需要有写的功能，即有<code>O_APPEND&O_WONLY == O_WONLY</code>成立，这样才能写入）</p>
-<h3>实现:</h3>
-<p>在<code>user/lib/file.c</code>文件中，对于<code>open</code>函数，增加如下：</p>
+<p>
+这里的实现确实有些潦草（有偷奸耍滑之嫌），这段代码的意思是尝试创建一个文件，如果存在（创建失败）则证明已有文件，那么将其移除；如果不存在（创建成功），则<code>rm</code>无效，然后为防止文件多出来，于是删除。（但这里存在dirty的<code>debugf</code>输出，本人认为由于已经删除这个文件了，dirty什么的已经无所谓了，于是无视了，但仔细思考下还是存在问题，一定有更好的实现）
+</p>
+<h2>
+反引号的实现
+</h2>
+<h3>
+目标：
+</h3>
+<p>
+将反引号内指令执行的所有标准输出替换为 <code>echo</code>
+的参数，即输出反引号内指令执行的结果。
+</p>
+<h3>
+思路：
+</h3>
+<p>
+笔者在实现了单一的echo（不添加重定位）后提交了评测，发现通过了（发现评测很弱）就放在了那里，这里的实现是弱版本的反引号。具体的思路是，在<code>_gettoken</code>中读出反引号后，直接将匹配的反引号（不考虑反引号的嵌套）之间的内容全部读出，然后扔到runcmd中。(实现与双引号类似，这里暂且省略)
+</p>
+<h2>
+追加重定向的实现
+</h2>
+<h3>
+目标：
+</h3>
+<p>
+实现对文件的追加写入
+</p>
+<h3>
+思路：
+</h3>
+<p>
+对于’&gt;‘，我们在lab6中已经实现了覆盖重定向写入。所以对于‘&gt;&gt;‘的实现，可以依托于这个。即读到一个’&gt;‘后，判断后一个字符是不是’&gt;‘，是的话则设置标记，并将<code>s++</code>越过这两个，返回’&gt;’。
+</p>
+<p>
+对于追加写，笔者实现了<code>O_APPEND</code>,即写入前，将偏移量改为文件大小（此时<code>O_APPEND</code>同时需要有写的功能，即有<code>O_APPEND&amp;O_WONLY
+== O_WONLY</code>成立，这样才能写入）
+</p>
+<h3>
+实现:
+</h3>
+<p>
+在<code>user/lib/file.c</code>文件中，对于<code>open</code>函数，增加如下：
+</p>
 <pre><code class="language-c">#define O_APPEND 0x1001 //append challenge
 if ((mode & O_APPEND) == O_APPEND) &#123;
         fd->fd_offset = size;
 &#125;</code></pre>
-<p>在<code>user/sh.c</code>中，可以仿照lab 6的实现。</p>
-<p><strong>注意，这里的O_APPEND和O_WONLY需要 ‘|’ 一个O_CREAT，表示文件不存在则创建（这个可能根据需要会改动）</strong></p>
-<h2>注释的实现</h2>
-<h3>目标：</h3>
-<p>使用 <code>#</code> 实现注释功能，例如 <code>ls | cat # this is a comment meow</code>，<code>ls | cat</code> 会被正确执行，而后面的注释则会被抛弃。</p>
-<h3>思路及实现：</h3>
-<p>在函数<code>_gettoken</code>中，一旦读到<code>#</code>则<code>s++</code>到结束，然后返回<code>0</code>:</p>
+<p>
+在<code>user/sh.c</code>中，可以仿照lab 6的实现。
+</p>
+<p>
+<strong>注意，这里的O_APPEND和O_WONLY需要 ‘|’
+一个O_CREAT，表示文件不存在则创建（这个可能根据需要会改动）</strong>
+</p>
+<h2>
+注释的实现
+</h2>
+<h3>
+目标：
+</h3>
+<p>
+使用 <code>#</code> 实现注释功能，例如 <code>ls | cat # this is a
+comment meow</code>，<code>ls | cat</code>
+会被正确执行，而后面的注释则会被抛弃。
+</p>
+<h3>
+思路及实现：
+</h3>
+<p>
+在函数<code>_gettoken</code>中，一旦读到<code>#</code>则<code>s++</code>到结束，然后返回<code>0</code>:
+</p>
 <pre><code class="language-c">if(*s == '#')&#123;
         while(*s) &#123;
             s++;
         &#125;
         return 0;
 &#125;</code></pre>
-<h2>一行多命令的实现</h2>
-<h3>目标：</h3>
-<p>实现使用 <code>;</code> 将多条指令隔开从而从左至右依顺序执行每条指令的功能。</p>
-<h3>实现思路：</h3>
-<p>每读到一个分号，则<code>fork</code>一个子进程去执行，父进程等待子进程完成（同时需要支持重定向，避免读写不一）</p>
-<h3>实现方法：</h3>
-<p>在重定向时，由于读入子进程的token时候，是处于父进程，因此可以直接设置一个标志位表示子进程是否有重定向。</p>
+<h2>
+一行多命令的实现
+</h2>
+<h3>
+目标：
+</h3>
+<p>
+实现使用 <code>;</code>
+将多条指令隔开从而从左至右依顺序执行每条指令的功能。
+</p>
+<h3>
+实现思路：
+</h3>
+<p>
+每读到一个分号，则<code>fork</code>一个子进程去执行，父进程等待子进程完成（同时需要支持重定向，避免读写不一）
+</p>
+<h3>
+实现方法：
+</h3>
+<p>
+在重定向时，由于读入子进程的token时候，是处于父进程，因此可以直接设置一个标志位表示子进程是否有重定向。
+</p>
 <pre><code class="language-c">forktemp = fork();
 if (forktemp == 0) &#123;
     return argc;
@@ -291,8 +413,12 @@ if (forktemp == 0) &#123;
     return parsecmd(argv, rightpipe);
 &#125;
 break;</code></pre>
-<h2>实现引号支持</h2>
-<p>同反引号，只需要读入两个引号之间的内容即可（保证了不存在引号嵌套，但嵌套也没什么）。</p>
+<h2>
+实现引号支持
+</h2>
+<p>
+同反引号，只需要读入两个引号之间的内容即可（保证了不存在引号嵌套，但嵌套也没什么）。
+</p>
 <pre><code class="language-c">if(*s == '\"') &#123;
         *s = 0;
         s++;
@@ -304,14 +430,36 @@ break;</code></pre>
         *p2 = s;
         return 'w';
 &#125;</code></pre>
-<h2>实现历史指令</h2>
-<h3>目标：</h3>
-<p>你需要实现 shell 中保存历史指令的功能，可以通过 上键 和 下键 选择所保存的指令并执行。你需要将历史指令保存到根目录的 <code>.mosh_history</code> 文件中（一条指令一行），为了评测的方便，我们设定 <code>$HISTFILESIZE=20</code>（bash 中默认为 500），即在 <code>.mosh_history</code> 中至多保存最近的 20 条指令。你还需要支持通过 <code>history</code> 命令输出 <code>.mosh_history</code> 文件中的内容。</p>
-<h3>思路：</h3>
-<p>每次读入一个指令，就将其追加写入<code>.mosh_history</code>中。然后读这个文件的时候，笔者从后往前遍历（<code>read</code>可以返回字符数），每次读到一个<code>\n</code>就计数一次<code>count++</code>，并将内容倒写入一个字符串数组<code>out</code>，当超过20条或者不足20条时候，则停止写入<code>out</code>。最后，从后向前遍历<code>out</code>。<strong>（注意这里<code>history</code>与往年实现不同，是内置指令，即不允许创建一个<code>history.c</code>文件)</strong></p>
-<p>对于上下指令，需要复制当前指令数量到一个<code>his_now</code>变量中，全部读入后，操作his_now上键-1，下键+1（但不得越界），字符串数组<code>tmp</code>按照<code>\n</code>和<code>his_now</code>的数量进行读入输出。同时，需要维护光标的位置。<del>（这位同学，你也不想你光标乱跑的事情被别人知道吧）</del></p>
-<h3>实现：</h3>
-<p>这里仅列出需要实现的函数（需要具体代码可留言）：</p>
+<h2>
+实现历史指令
+</h2>
+<h3>
+目标：
+</h3>
+<p>
+你需要实现 shell 中保存历史指令的功能，可以通过 上键 和 下键
+选择所保存的指令并执行。你需要将历史指令保存到根目录的
+<code>.mosh_history</code>
+文件中（一条指令一行），为了评测的方便，我们设定
+<code>$HISTFILESIZE=20</code>（bash 中默认为 500），即在
+<code>.mosh_history</code> 中至多保存最近的 20 条指令。你还需要支持通过
+<code>history</code> 命令输出 <code>.mosh_history</code> 文件中的内容。
+</p>
+<h3>
+思路：
+</h3>
+<p>
+每次读入一个指令，就将其追加写入<code>.mosh_history</code>中。然后读这个文件的时候，笔者从后往前遍历（<code>read</code>可以返回字符数），每次读到一个<code></code>就计数一次<code>count++</code>，并将内容倒写入一个字符串数组<code>out</code>，当超过20条或者不足20条时候，则停止写入<code>out</code>。最后，从后向前遍历<code>out</code>。<strong>（注意这里<code>history</code>与往年实现不同，是内置指令，即不允许创建一个<code>history.c</code>文件)</strong>
+</p>
+<p>
+对于上下指令，需要复制当前指令数量到一个<code>his_now</code>变量中，全部读入后，操作his_now上键-1，下键+1（但不得越界），字符串数组<code>tmp</code>按照<code></code>和<code>his_now</code>的数量进行读入输出。同时，需要维护光标的位置。<del>（这位同学，你也不想你光标乱跑的事情被别人知道吧）</del>
+</p>
+<h3>
+实现：
+</h3>
+<p>
+这里仅列出需要实现的函数（需要具体代码可留言）：
+</p>
 <pre><code>int hsty_num;
 int hsty_now;
 char cmdbuf[1024];
@@ -324,7 +472,9 @@ int insert_char(char *buf, int i, char ch);
 void remove_char(char *buf, int i);
 int readline(int fd, char *buf, int n);
 </code></pre>
-<p>以及对<code>history</code>的判别：</p>
+<p>
+以及对<code>history</code>的判别：
+</p>
 <pre><code class="language-c">if(strlen(buf) >= 7) &#123;
             if(buf[0] == 'h' && buf[1] == 'i' && buf[2] == 's' && buf[3] == 't' && buf[4] == 'o' && buf[5] == 'r' && buf[6] == 'y') &#123;
                 if((fd = open("/.mosh_history", O_RDONLY| O_CREAT)) < 0) &#123;
@@ -352,7 +502,9 @@ int readline(int fd, char *buf, int n);
                 continue;
             &#125;
         &#125;</code></pre>
-<p>对于光标维护，需要知道上下的具体表现方式（两个ASCII码）：</p>
+<p>
+对于光标维护，需要知道上下的具体表现方式（两个ASCII码）：
+</p>
 <pre><code class="language-c">case 0x1b: // read \e
             read(0, &ch, 1); // read [
             read(0, &ch, 1); // read A B C D for arrow keys
@@ -386,32 +538,69 @@ int readline(int fd, char *buf, int n);
                 break;
             &#125;
             break;</code></pre>
-<p>这里还额外实现了对删除backspace的支持（未做要求，只是笔者实在受不了原来的insert修正了~（我受够了那些繁文缛节了）~）：</p>
+<p>
+这里还额外实现了对删除backspace的支持（未做要求，只是笔者实在受不了原来的insert修正了<sub>（我受够了那些繁文缛节了）</sub>）：
+</p>
 <pre><code class="language-c">case 0x7f:  
             if (cursor > 0) &#123;
                 remove_char(buf, cursor - 1);
                 cursor--;
             &#125;
             break;</code></pre>
-<h2>实现<code>&</code>后缀的shell后台任务</h2>
-<p>（这个与往年实现有很大不同）</p>
-<h3>目标：</h3>
+<h2>
+实现<code>&amp;</code>后缀的shell后台任务
+</h2>
+<p>
+（这个与往年实现有很大不同）
+</p>
+<h3>
+目标：
+</h3>
 <ul>
-<li>支持 mosh 运行后台进程，当命令的末尾添加上 <code>&</code> 符号时，该命令应该在后台执行。</li>
-<li>实现 <code>jobs</code> 指令列出当前 shell 中所有后台任务的状态。你需要为任务创建 ID（每次启动 mosh 时，任务从 1 开始编号，每个新增任务编号应加 1），并且通过 <code>jobs</code> 指令输出包括：任务 ID（<code>job_id</code>）、任务的运行状态（<code>status</code>：可能的取值为 <code>Running</code>，<code>Done</code>）、任务的进程 ID（<code>env_id</code>）与运行任务时输入的指令（<code>cmd</code>）。请以 <code>printf("[%d] %-10s 0x%08x %s", job_id, status, env_id, cmd)</code> 的格式进行输出。</li>
-<li>实现 <code>fg</code> 将后台任务带回前台继续运行，用户通过 <code>fg <job_id></code> 的方式将对应任务带回前台。</li>
-<li>实现 <code>kill</code> 指令，用户通过 <code>kill <job_id></code> 来实现结束后台任务。</li>
+<li>
+支持 mosh 运行后台进程，当命令的末尾添加上 <code>&amp;</code>
+符号时，该命令应该在后台执行。
+</li>
+<li>
+实现 <code>jobs</code> 指令列出当前 shell
+中所有后台任务的状态。你需要为任务创建 ID（每次启动 mosh 时，任务从 1
+开始编号，每个新增任务编号应加 1），并且通过 <code>jobs</code>
+指令输出包括：任务
+ID（<code>job_id</code>）、任务的运行状态（<code>status</code>：可能的取值为
+<code>Running</code>，<code>Done</code>）、任务的进程
+ID（<code>env_id</code>）与运行任务时输入的指令（<code>cmd</code>）。请以
+<code>printf(“[%d] %-10s 0x%08x %s”, job_id, status, env_id, cmd)</code>
+的格式进行输出。
+</li>
+<li>
+实现 <code>fg</code> 将后台任务带回前台继续运行，用户通过 <code>fg
+<job_id></code> 的方式将对应任务带回前台。
+</li>
+<li>
+实现 <code>kill</code> 指令，用户通过 <code>kill <job_id></code>
+来实现结束后台任务。
+</li>
 </ul>
-<h3>创建后台指令：</h3>
-<p>即对以<code>&</code>结尾的命令，创建进程，扔到后台运行（保持当前界面仍然是父进程）。</p>
-<h4>实现：</h4>
-<p>为存储这些进程，笔者创建了一个结构体：</p>
+<h3>
+创建后台指令：
+</h3>
+<p>
+即对以<code>&amp;</code>结尾的命令，创建进程，扔到后台运行（保持当前界面仍然是父进程）。
+</p>
+<h4>
+实现：
+</h4>
+<p>
+为存储这些进程，笔者创建了一个结构体：
+</p>
 <pre><code class="language-c">struct Jobs &#123;
     char cmd[MAXCMDLEN];            //MAXCMDLEN为自定义宏
     int envid;
     int id;
 &#125; jobs[300];</code></pre>
-<p>同时，对main函数<code>runcmd</code>位置进行重构：</p>
+<p>
+同时，对main函数<code>runcmd</code>位置进行重构：
+</p>
 <pre><code class="language-c">if (r == 0) &#123;
             runcmd(buf);
             exit();
@@ -429,12 +618,25 @@ int readline(int fd, char *buf, int n);
                 wait(r);                        //如果不是后台指令，则需要等待上一条执行完毕才能读入下一条指令
             &#125;
     &#125;</code></pre>
-<h3>jobs的实现</h3>
-<p>对于jobs，kill和fg，笔者都是当作内置指令进行实现。</p>
-<h4>思路：</h4>
-<p><code>envid</code>和<code>cmd</code>已经在<code>jobs</code>中存入，所以我们需要考虑的仅仅是状态(<code>status</code>)。因此，为获得进程的运行状态<code>env status</code>，我们需要一个系统调用。这个系统调用实现非常简单，只需要传入<code>envid</code>，然后在内核态使用<code>envid2env</code>获得进程控制块（无需考虑free后返回-2的问题，此时就是Done的状态了）。</p>
-<h4>实现：</h4>
-<p>系统调用部分的实现按照套路即可。</p>
+<h3>
+jobs的实现
+</h3>
+<p>
+对于jobs，kill和fg，笔者都是当作内置指令进行实现。
+</p>
+<h4>
+思路：
+</h4>
+<p>
+<code>envid</code>和<code>cmd</code>已经在<code>jobs</code>中存入，所以我们需要考虑的仅仅是状态(<code>status</code>)。因此，为获得进程的运行状态<code>env
+status</code>，我们需要一个系统调用。这个系统调用实现非常简单，只需要传入<code>envid</code>，然后在内核态使用<code>envid2env</code>获得进程控制块（无需考虑free后返回-2的问题，此时就是Done的状态了）。
+</p>
+<h4>
+实现：
+</h4>
+<p>
+系统调用部分的实现按照套路即可。
+</p>
 <pre><code class="language-c">if(buf[0] == 'j' && buf[1] == 'o' && buf[2] == 'b' && buf[3] == 's') &#123;
                 for(int i = 0; i < jobs_n; i++) &#123;
                      printf("[%d] %-10s 0x%08x %s\n", jobs[i].id,
@@ -443,18 +645,38 @@ int readline(int fd, char *buf, int n);
                 &#125;
                 continue;   
             &#125;</code></pre>
-<h3>kill的实现</h3>
-<p>kill的实现需要将进程状态设置为<code>NOT_RUNNABLE</code>(2)，设置进程状态的系统调用已经实现过了，所以kill的实现十分简单（可能是课程组的失误，输出时候仍然是<code>fg:xxxxxxx</code>，导致笔者卡了一下午不知道为什么，直到看到pyq......）。</p>
-<h3>fg的实现</h3>
-<p>实际上，fg的实现就是需要继续执行对应进程的指令，那么怎么才能接手呢？欸对，<code>wait</code>就好了，所以每次读入fg后，如果有效则直接wait就好，这样运行结束后还是父进程。</p>
-<h2>指令条件执行</h2>
-<p>（这个是笔者感觉最难的部分了......）</p>
-<p>首先，需要导入<code>true.c</code>和<code>false.c</code>用于测试。实际上，这个是考虑对ipc的一个应用，即需要将子进程运行的返回值发送给父进程。官方推荐的做法是实现子进程退出<code>exit</code>返回一个值（不能简单粗暴直接void改int啊），笔者在同学指引下，对进程控制块增加一个<code>env_res</code>作为该进程结束后的返回值。1表示运行失败，0表示运行成功，默认为1，当且仅当进程正常退出后才设为0。</p>
-<p>因此首先需要两个系统调用：获得<code>env_res</code>和设置<code>env_res</code>，这个和status的获取和设置不能说十分相似，只能说一模一样。然后，在<code>user/lib/libos.c</code>中，修改添加如下：</p>
+<h3>
+kill的实现
+</h3>
+<p>
+kill的实现需要将进程状态设置为<code>NOT_RUNNABLE</code>(2)，设置进程状态的系统调用已经实现过了，所以kill的实现十分简单（可能是课程组的失误，输出时候仍然是<code>fg:xxxxxxx</code>，导致笔者卡了一下午不知道为什么，直到看到pyq……）。
+</p>
+<h3>
+fg的实现
+</h3>
+<p>
+实际上，fg的实现就是需要继续执行对应进程的指令，那么怎么才能接手呢？欸对，<code>wait</code>就好了，所以每次读入fg后，如果有效则直接wait就好，这样运行结束后还是父进程。
+</p>
+<h2>
+指令条件执行
+</h2>
+<p>
+（这个是笔者感觉最难的部分了……）
+</p>
+<p>
+首先，需要导入<code>true.c</code>和<code>false.c</code>用于测试。实际上，这个是考虑对ipc的一个应用，即需要将子进程运行的返回值发送给父进程。官方推荐的做法是实现子进程退出<code>exit</code>返回一个值（不能简单粗暴直接void改int啊），笔者在同学指引下，对进程控制块增加一个<code>env_res</code>作为该进程结束后的返回值。1表示运行失败，0表示运行成功，默认为1，当且仅当进程正常退出后才设为0。
+</p>
+<p>
+因此首先需要两个系统调用：获得<code>env_res</code>和设置<code>env_res</code>，这个和status的获取和设置不能说十分相似，只能说一模一样。然后，在<code>user/lib/libos.c</code>中，修改添加如下：
+</p>
 <pre><code class="language-c">int r = main(argc, argv);
 syscall_set_res(r);         //仅有正常返回时候才会执行这一条</code></pre>
-<p>对于"||"和“&&”的解析，完全可以仿照">>"的解析（见上文）。</p>
-<p>然后是最关键的ipc部分，我们为什么不能直接使用<code>envs[ENVX(child)].env_res</code>取出呢？答：这时候这个值已经变成1了（无论是否正确返回），因此我们需要在运行后、销毁前的阶段发送消息。同时，父进程需要在wait子进程完成前，设置好准备接收的状态。</p>
+<p>
+对于”||“和“&amp;&amp;”的解析，完全可以仿照”&gt;&gt;“的解析（见上文）。
+</p>
+<p>
+然后是最关键的ipc部分，我们为什么不能直接使用<code>envs[ENVX(child)].env_res</code>取出呢？答：这时候这个值已经变成1了（无论是否正确返回），因此我们需要在运行后、销毁前的阶段发送消息。同时，父进程需要在wait子进程完成前，设置好准备接收的状态。
+</p>
 <pre><code class="language-c">//runcmd 
     int to = envs[ENVX(syscall_getenvid())].env_parent_id;
     if(to != mainEnvid) &#123;
@@ -471,12 +693,24 @@ syscall_set_res(r);         //仅有正常返回时候才会执行这一条</cod
         return parsecmd(argv,rightpipe);
      &#125;
 </code></pre>
-<p>mainEnvid存储的是当前父进程的父进程（因为我们不需要给父进程的父进程任何消息，即最后一个指令），所以进行特判。这一值在main里面直接设定好。</p>
-<p>最后就是一堆逻辑问题......</p>
-<p>虽然很短，但是感觉想清楚这一套还是挺复杂的，再次感谢rygg！</p>
-<h2>其它问题</h2>
-<h3>忙等：</h3>
-<p>实现完后台指令后，发现那个readline会在sys_cgetc里面忙等导致其他进程没法调动：</p>
+<p>
+mainEnvid存储的是当前父进程的父进程（因为我们不需要给父进程的父进程任何消息，即最后一个指令），所以进行特判。这一值在main里面直接设定好。
+</p>
+<p>
+最后就是一堆逻辑问题……
+</p>
+<p>
+虽然很短，但是感觉想清楚这一套还是挺复杂的，再次感谢rygg！
+</p>
+<h2>
+其它问题
+</h2>
+<h3>
+忙等：
+</h3>
+<p>
+实现完后台指令后，发现那个readline会在sys_cgetc里面忙等导致其他进程没法调动：
+</p>
 <pre><code class="language-c">int sys_cgetc(void) &#123;
     int ch;
     while ((ch = scancharc()) == 0) &#123;
@@ -484,11 +718,106 @@ syscall_set_res(r);         //仅有正常返回时候才会执行这一条</cod
     return ch;
 &#125;
 </code></pre>
-<p>直接将<code class="language-c">while</code>改掉就好。</p>
-<h2>致谢：</h2>
-<p><a target="_blank" rel="noopener" href="https://b1fang.github.io/2023/06/16/OS-Challenge/">https://b1fang.github.io/2023/06/16/OS-Challenge/</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/wokron/BUAA-OS-2023">https://github.com/wokron/BUAA-OS-2023</a></p>
-<p>以及所有讨论区、微信群的uu们</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://yanglingsanshan.github.io">舲.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://yanglingsanshan.github.io/2024/06/22/BUAA-OS-Challenge-2023/">https://yanglingsanshan.github.io/2024/06/22/BUAA-OS-Challenge-2023/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://yanglingsanshan.github.io" target="_blank">YangLingSanShan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%AD%E7%B3%BB%E6%BC%82%E6%B3%8A%E7%94%9F%E6%B4%BB/">六系漂泊生活</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/10/Dataset%20Condensation%E6%95%B4%E5%90%88%E7%89%88/" title="Dataset Condensation整合版"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Dataset Condensation整合版</div></div><div class="info-2"><div class="info-item-1">目录  Data Pruning via Moving-one-Sample-out D² PRUNING: Message Passing for Balancing Diversity &amp; Difficulty Sieve: Multimodal Dataset Pruning Using Image Captioning Models  Data Pruning via Moving-one-Sample-out  这个是NeurIPS 2023的文章 Arxiv地址：https://arxiv.org/abs/2310.14664  背景与贡献 现有方法概述 Dataset Pruning的主流方法有：  重要性指标打分：entropy, SSP, Forgetting, GraNd/EL2N, Memorization 等 基于几何覆盖/样本多样性思想：Moderat,  Herding, Coverage-centric, CCS等 优化方法：CRAIG, Grad-match, bi-level,...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">舲.</div><div class="author-info-description">马孔多在下雨</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/YangLingSanShan"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">不知乘月几人归，落月摇情满江树。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">实现对.b的忽略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">思路：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">实现方法：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">实现touch，mkdir，rm这三个外部指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">实现流程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.2.</span> <span class="toc-text">touch实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.3.</span> <span class="toc-text">mkdir实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.4.</span> <span class="toc-text">rm实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">反引号的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.1.</span> <span class="toc-text">目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.2.</span> <span class="toc-text">思路：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">追加重定向的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.1.</span> <span class="toc-text">目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.2.</span> <span class="toc-text">思路：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.3.</span> <span class="toc-text">实现:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">注释的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">7.1.</span> <span class="toc-text">目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">7.2.</span> <span class="toc-text">思路及实现：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">一行多命令的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">8.1.</span> <span class="toc-text">目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">8.2.</span> <span class="toc-text">实现思路：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">8.3.</span> <span class="toc-text">实现方法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">实现引号支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text">实现历史指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">10.1.</span> <span class="toc-text">目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">10.2.</span> <span class="toc-text">思路：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">10.3.</span> <span class="toc-text">实现：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">11.</span> <span class="toc-text">实现&amp;后缀的shell后台任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.1.</span> <span class="toc-text">目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.2.</span> <span class="toc-text">创建后台指令：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">11.2.1.</span> <span class="toc-text">实现：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.3.</span> <span class="toc-text">jobs的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">11.3.1.</span> <span class="toc-text">思路：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">11.3.2.</span> <span class="toc-text">实现：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.4.</span> <span class="toc-text">kill的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.5.</span> <span class="toc-text">fg的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">12.</span> <span class="toc-text">指令条件执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">13.</span> <span class="toc-text">其它问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">13.1.</span> <span class="toc-text">忙等：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">14.</span> <span class="toc-text">致谢：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/15/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88Word2vec%EF%BC%89/" title="推荐系统学习（Word2vec）">推荐系统学习（Word2vec）</a><time datetime="2025-04-15T09:27:44.000Z" title="发表于 2025-04-15 17:27:44">2025-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/11/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%80%89%E6%8B%A9%E6%80%A7%E5%81%8F%E5%B7%AE%EF%BC%89/" title="推荐系统学习（选择性偏差）">推荐系统学习（选择性偏差）</a><time datetime="2025-04-11T07:55:24.000Z" title="发表于 2025-04-11 15:55:24">2025-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/11/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8F%AC%E5%9B%9E%EF%BC%89/" title="推荐系统学习（召回）">推荐系统学习（召回）</a><time datetime="2025-04-11T03:57:13.000Z" title="发表于 2025-04-11 11:57:13">2025-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/" title="推荐系统学习（CTR预估）">推荐系统学习（CTR预估）</a><time datetime="2025-04-09T06:46:44.000Z" title="发表于 2025-04-09 14:46:44">2025-04-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/10/Dataset%20Condensation%E6%95%B4%E5%90%88%E7%89%88/" title="Dataset Condensation整合版">Dataset Condensation整合版</a><time datetime="2025-03-10T10:00:00.000Z" title="发表于 2025-03-10 18:00:00">2025-03-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 舲.</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(async () => {
+<p>
+直接将<code class="language-c">while</code>改掉就好。
+</p>
+<h2>
+致谢：
+</h2>
+<p>
+<a target="_blank" rel="noopener" href="https://b1fang.github.io/2023/06/16/OS-Challenge/">https://b1fang.github.io/2023/06/16/OS-Challenge/</a>
+</p>
+<p>
+<a target="_blank" rel="noopener" href="https://github.com/wokron/BUAA-OS-2023">https://github.com/wokron/BUAA-OS-2023</a>
+</p>
+<p>
+以及所有讨论区、微信群的uu们
+</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://yanglingsanshan.github.io">舲.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://yanglingsanshan.github.io/2024/06/22/BUAA-OS-Challenge-2023/">https://yanglingsanshan.github.io/2024/06/22/BUAA-OS-Challenge-2023/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://yanglingsanshan.github.io" target="_blank">YangLingSanShan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%AD%E7%B3%BB%E6%BC%82%E6%B3%8A%E7%94%9F%E6%B4%BB/">六系漂泊生活</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/10/Dataset%20Condensation%E6%95%B4%E5%90%88%E7%89%88/" title="Dataset Condensation整合版"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Dataset Condensation整合版</div></div><div class="info-2"><div class="info-item-1">目录  Data Pruning via Moving-one-Sample-out D² PRUNING: Message Passing for Balancing Diversity &amp; Difficulty Sieve: Multimodal Dataset Pruning Using Image Captioning Models  Data Pruning via Moving-one-Sample-out  这个是NeurIPS 2023的文章 Arxiv地址：https://arxiv.org/abs/2310.14664  背景与贡献 现有方法概述 Dataset Pruning的主流方法有： 1. 重要性指标打分：entropy, SSP, Forgetting, GraNd/EL2N, Memorization 等 2. 基于几何覆盖/样本多样性思想：Moderat, Herding, Coverage-centric, CCS等 3. 优化方法：CRAIG, Grad-match, bi-level,...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">舲.</div><div class="author-info-description">马孔多在下雨</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/YangLingSanShan"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">不知乘月几人归，落月摇情满江树。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">
+前言
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">
+实现对.b的忽略
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">
+目标：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">
+思路：
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">
+实现方法：
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">
+实现touch，mkdir，rm这三个外部指令
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">
+实现流程：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.2.</span> <span class="toc-text">
+touch实现
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.3.</span> <span class="toc-text">
+mkdir实现
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.4.</span> <span class="toc-text">
+rm实现
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">
+反引号的实现
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.1.</span> <span class="toc-text">
+目标：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.2.</span> <span class="toc-text">
+思路：
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">
+追加重定向的实现
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.1.</span> <span class="toc-text">
+目标：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.2.</span> <span class="toc-text">
+思路：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.3.</span> <span class="toc-text">
+实现:
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">
+注释的实现
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">7.1.</span> <span class="toc-text">
+目标：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">7.2.</span> <span class="toc-text">
+思路及实现：
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">
+一行多命令的实现
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">8.1.</span> <span class="toc-text">
+目标：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">8.2.</span> <span class="toc-text">
+实现思路：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">8.3.</span> <span class="toc-text">
+实现方法：
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">
+实现引号支持
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text">
+实现历史指令
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">10.1.</span> <span class="toc-text">
+目标：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">10.2.</span> <span class="toc-text">
+思路：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">10.3.</span> <span class="toc-text">
+实现：
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">11.</span> <span class="toc-text">
+实现&amp;后缀的shell后台任务
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.1.</span> <span class="toc-text">
+目标：
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.2.</span> <span class="toc-text">
+创建后台指令：
+</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">11.2.1.</span> <span class="toc-text">
+实现：
+</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.3.</span> <span class="toc-text">
+jobs的实现
+</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">11.3.1.</span> <span class="toc-text">
+思路：
+</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">11.3.2.</span> <span class="toc-text">
+实现：
+</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.4.</span> <span class="toc-text">
+kill的实现
+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">11.5.</span> <span class="toc-text">
+fg的实现
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">12.</span> <span class="toc-text">
+指令条件执行
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">13.</span> <span class="toc-text">
+其它问题
+</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">13.1.</span> <span class="toc-text">
+忙等：
+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">14.</span> <span class="toc-text">
+致谢：
+</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/18/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%86%B7%E5%90%AF%E5%8A%A8%EF%BC%89/" title="推荐系统学习（Word2vec）">推荐系统学习（Word2vec）</a><time datetime="2025-04-18T08:58:00.000Z" title="发表于 2025-04-18 16:58:00">2025-04-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/15/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88Word2vec%EF%BC%89/" title="推荐系统学习（Word2vec）">推荐系统学习（Word2vec）</a><time datetime="2025-04-15T09:27:44.000Z" title="发表于 2025-04-15 17:27:44">2025-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/11/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%80%89%E6%8B%A9%E6%80%A7%E5%81%8F%E5%B7%AE%EF%BC%89/" title="推荐系统学习（选择性偏差）">推荐系统学习（选择性偏差）</a><time datetime="2025-04-11T07:55:24.000Z" title="发表于 2025-04-11 15:55:24">2025-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/11/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8F%AC%E5%9B%9E%EF%BC%89/" title="推荐系统学习（召回）">推荐系统学习（召回）</a><time datetime="2025-04-11T03:57:13.000Z" title="发表于 2025-04-11 11:57:13">2025-04-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/09/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%EF%BC%88CTR%E9%A2%84%E4%BC%B0%EF%BC%89/" title="推荐系统学习（CTR预估）">推荐系统学习（CTR预估）</a><time datetime="2025-04-09T06:46:44.000Z" title="发表于 2025-04-09 14:46:44">2025-04-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 舲.</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(async () => {
   const showKatex = () => {
     document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
   }
